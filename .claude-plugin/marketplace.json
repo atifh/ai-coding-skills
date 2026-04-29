@@ -5,8 +5,8 @@
   "author": {
     "name": "Atif Haider"
   },
-  "repository": "https://github.com/atifhaider/ai-coding-skills",
-  "homepage": "https://github.com/atifhaider/ai-coding-skills",
+  "repository": "https://github.com/atifh/ai-coding-skills",
+  "homepage": "https://github.com/atifh/ai-coding-skills",
   "license": "MIT",
   "tags": ["database", "performance", "sql", "mongodb", "postgresql", "sqlite", "mysql", "optimization", "indexing"],
   "skills": [

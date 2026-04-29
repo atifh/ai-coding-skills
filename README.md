@@ -1,40 +1,46 @@
 # ai-coding-skills
 
-A collection of Claude Code skills for software engineering workflows.
+A collection of Claude Code skills for software engineering workflows, published on the Claude Code marketplace.
 
 ## Skills
 
 | Skill | Description |
 |-------|-------------|
-| [database-engineer](./skills/database-engineer/) | Audits and optimizes the DB layer — indexes, query patterns, schema design, and config — for SQLite, PostgreSQL, MySQL, and MongoDB |
+| [db-engineer](./skills/db-engineer/) | Acts as a senior database engineer — audits indexes, query patterns, N+1 issues, transactions, and config for SQLite, PostgreSQL, MySQL, and MongoDB. Reports by severity and waits for approval before applying fixes. |
 
-## Installing a skill
+## Installation
 
 ```bash
-claude plugin install https://github.com/atifhaider/ai-coding-skills
+claude plugin install https://github.com/atifh/ai-coding-skills
 ```
 
-Or install individual skills via [mcpmarket.com](https://mcpmarket.com).
+Or find it on the [Claude Code Marketplace](https://mcpmarket.com).
 
-## Structure
+## Repo Structure
 
 ```
+.claude-plugin/
+├── plugin.json         # Plugin manifest (name, version, author, skills list)
+└── marketplace.json    # Marketplace listing metadata (description, tags)
+
 skills/
 └── <skill-name>/
-    ├── SKILL.md          # Required — skill instructions + frontmatter
-    ├── scripts/          # Optional — reusable scripts bundled with the skill
-    ├── references/       # Optional — reference docs loaded on demand
-    └── assets/           # Optional — templates, icons, other static files
+    └── SKILL.md        # Skill instructions + YAML frontmatter (name, description)
 
 evals/
 └── <skill-name>/
-    ├── evals/            # eval prompts and assertions (evals.json)
-    ├── test-fixtures/    # synthetic codebases used as test inputs
-    └── iteration-N/      # graded results per iteration
+    ├── evals.json        # Eval prompts and assertions
+    ├── test-fixtures/    # Synthetic codebases used as test inputs
+    └── iteration-N/      # Graded results per eval iteration
 ```
 
-## Contributing
+## Adding a new skill
 
-Each skill lives in its own directory under `skills/`. The only required file is `SKILL.md` with valid YAML frontmatter (`name` and `description` fields).
+1. Create `skills/<your-skill-name>/SKILL.md` with valid YAML frontmatter (`name` and `description`)
+2. Add an entry to `.claude-plugin/plugin.json` under `skills`
+3. Add an entry to `.claude-plugin/marketplace.json` under `skills`
+4. Optionally add an eval suite under `evals/<your-skill-name>/`
 
-Eval suites live under `evals/<skill-name>/` and are optional but encouraged.
+## Author
+
+**Atif Haider** — [atifhaider.com](https://atifhaider.com)
