@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "description": "A collection of Claude Code skills for software engineering workflows — database engineering, query optimization, schema auditing, and more.",
   "author": {
-    "name": "Atif Haider",
-    "email": "atif.haider@nagarro.com"
+    "name": "Atif Haider"
   },
   "skills": [
     {
