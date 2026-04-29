@@ -25,8 +25,16 @@ skills/
     ├── scripts/          # Optional — reusable scripts bundled with the skill
     ├── references/       # Optional — reference docs loaded on demand
     └── assets/           # Optional — templates, icons, other static files
+
+evals/
+└── <skill-name>/
+    ├── evals/            # eval prompts and assertions (evals.json)
+    ├── test-fixtures/    # synthetic codebases used as test inputs
+    └── iteration-N/      # graded results per iteration
 ```
 
 ## Contributing
 
 Each skill lives in its own directory under `skills/`. The only required file is `SKILL.md` with valid YAML frontmatter (`name` and `description` fields).
+
+Eval suites live under `evals/<skill-name>/` and are optional but encouraged.
