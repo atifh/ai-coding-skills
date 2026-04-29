@@ -1,0 +1,54 @@
+{
+  "eval_id": 1,
+  "eval_name": "sqlite-express-blog-audit",
+  "configuration": "with_skill",
+  "expectations": [
+    {
+      "text": "catches_n_plus_1: Identifies N+1 query pattern in GET /",
+      "passed": true,
+      "evidence": "Report section '2. N+1 query pattern in GET /' explicitly identifies the loop firing 3 queries per post and quantifies it (50 posts = 151 queries)"
+    },
+    {
+      "text": "catches_missing_pragmas: Reports at least 3 of 6 missing SQLite PRAGMAs",
+      "passed": true,
+      "evidence": "Report fix #1 lists all 6 PRAGMAs with exact values and explains why each matters"
+    },
+    {
+      "text": "catches_missing_fk_indexes: Flags unindexed FK columns",
+      "passed": true,
+      "evidence": "Issues #4, #5, #6, #10 specifically name posts.user_id, comments.post_id, likes.post_id, comments.user_id with exact CREATE INDEX fixes"
+    },
+    {
+      "text": "catches_unbounded_select: Flags /search has no LIMIT",
+      "passed": true,
+      "evidence": "Issue #8 explicitly flags /search returning unlimited rows, links to routes/posts.js:22-27"
+    },
+    {
+      "text": "catches_missing_transaction: Flags DELETE route with no transaction",
+      "passed": true,
+      "evidence": "Issue #3 is marked Critical, includes exact db.transaction() fix with all 3 DELETE statements"
+    },
+    {
+      "text": "catches_app_side_aggregation: Flags /stats pulling all rows into memory",
+      "passed": true,
+      "evidence": "Issue #9 flags /stats with exact SQL COUNT replacement"
+    },
+    {
+      "text": "uses_severity_categories: Report has Critical/Important/Nice-to-have structure",
+      "passed": true,
+      "evidence": "Report has three distinct severity sections: 🔴 Critical (3 issues), 🟡 Important (5 issues), 🟢 Nice to have (2 issues)"
+    },
+    {
+      "text": "no_file_modifications: Did not modify source files",
+      "passed": true,
+      "evidence": "Only audit_report.md was written; db.js and routes/posts.js were not touched"
+    },
+    {
+      "text": "asks_for_approval: Ends with approval prompt before applying fixes",
+      "passed": true,
+      "evidence": "Report ends with 'Want me to apply all fixes, or select specific ones to apply?'"
+    }
+  ],
+  "pass_rate": 1.0,
+  "notes": "All 9 assertions passed. Report includes file:line references for every issue, quantified impact, and exact code fixes."
+}

@@ -1,0 +1,49 @@
+{
+  "eval_id": 2,
+  "eval_name": "postgres-prisma-ecommerce-audit",
+  "configuration": "with_skill",
+  "expectations": [
+    {
+      "text": "catches_n_plus_1: Identifies N+1 in getUserDashboard",
+      "passed": true,
+      "evidence": "Issue #3 explicitly names getUserDashboard, explains 20 orders = 21 queries, provides include fix"
+    },
+    {
+      "text": "catches_missing_indexes: Flags missing @@index on FK fields",
+      "passed": true,
+      "evidence": "Issue #2 (Critical) lists all 5 missing FK indexes with exact Prisma @@index syntax for Order, OrderItem, and Review models"
+    },
+    {
+      "text": "catches_missing_transaction: Flags placeOrder with no prisma.$transaction",
+      "passed": true,
+      "evidence": "Issue #1 (Critical) covers placeOrder with full prisma.$transaction fix including all operations"
+    },
+    {
+      "text": "catches_redundant_fetch: Flags double findUnique in getProductDetail",
+      "passed": true,
+      "evidence": "Issue #4 names getProductDetail, references lines 29 and 37, provides Promise.all fix"
+    },
+    {
+      "text": "catches_unbounded_query: Flags getAllProducts with no take/skip",
+      "passed": true,
+      "evidence": "Issue #6 flags getAllProducts with no limit"
+    },
+    {
+      "text": "catches_app_side_aggregate: Flags manual average instead of SQL AVG",
+      "passed": true,
+      "evidence": "Issue #5 covers the app-side average with Prisma aggregate fix"
+    },
+    {
+      "text": "uses_severity_categories: Report has severity tiers",
+      "passed": true,
+      "evidence": "Report has 🔴 Critical (2), 🟡 Important (5), 🟢 Nice to have (2)"
+    },
+    {
+      "text": "no_file_modifications: Did not modify schema.prisma or orderService.ts",
+      "passed": true,
+      "evidence": "Only audit_report.md written"
+    }
+  ],
+  "pass_rate": 1.0,
+  "notes": "All 8 assertions passed. Particularly strong on the transaction issue (marked Critical with full fix) and schema indexing."
+}

@@ -1,0 +1,49 @@
+{
+  "eval_id": 3,
+  "eval_name": "mongodb-mongoose-blog-audit",
+  "configuration": "with_skill",
+  "expectations": [
+    {
+      "text": "catches_missing_indexes: Flags Post.status, authorId, tags, viewCount and User.email",
+      "passed": true,
+      "evidence": "Issue #2 (Critical) lists all required indexes with exact Mongoose index() syntax for all fields including viewCount compound"
+    },
+    {
+      "text": "catches_dollar_where: Flags $where as full collection scan",
+      "passed": true,
+      "evidence": "Issue #1 (Critical) covers $where, explains it cannot use indexes, AND flags the injection vulnerability"
+    },
+    {
+      "text": "catches_n_plus_1: Identifies N+1 author fetch loop",
+      "passed": true,
+      "evidence": "Issue #4 names the loop, quantifies it (30 posts = 31 queries), provides populate and batch alternatives"
+    },
+    {
+      "text": "catches_no_lean: Flags missing .lean() on read-only queries",
+      "passed": true,
+      "evidence": "Issue #5 covers all 5 query locations missing .lean() with explanation of hydration overhead"
+    },
+    {
+      "text": "catches_app_side_aggregation: Flags /stats loading entire collection",
+      "passed": true,
+      "evidence": "Issue #3 (Critical) covers /stats with aggregation pipeline and countDocuments alternatives"
+    },
+    {
+      "text": "catches_array_field_index: Flags tags array needs a multikey index",
+      "passed": true,
+      "evidence": "Issue #2 includes postSchema.index({ tags: 1 }) and issue #6 adds compound { tags: 1, viewCount: -1 }"
+    },
+    {
+      "text": "uses_severity_categories: Report has severity tiers",
+      "passed": true,
+      "evidence": "Report has 🔴 Critical (3), 🟡 Important (4), 🟢 Nice to have (3)"
+    },
+    {
+      "text": "no_file_modifications: Did not modify model or route files",
+      "passed": true,
+      "evidence": "Only audit_report.md written"
+    }
+  ],
+  "pass_rate": 1.0,
+  "notes": "All 8 assertions passed. Bonus: caught $where injection risk (not in assertions). Strong on MongoDB-specific knowledge (multikey indexes, lean(), COLLSCAN terminology)."
+}

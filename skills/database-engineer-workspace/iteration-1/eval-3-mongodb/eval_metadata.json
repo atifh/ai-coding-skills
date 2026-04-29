@@ -1,0 +1,47 @@
+{
+  "eval_id": 3,
+  "eval_name": "mongodb-mongoose-blog-audit",
+  "prompt": "Act as a database engineer. My MongoDB + Mongoose app is getting slow as my user base grows. Here are my models and routes — what should I fix?",
+  "assertions": [
+    {
+      "id": "catches_missing_indexes",
+      "description": "Flags Post model missing indexes on status, authorId, tags, viewCount; User model missing index+unique on email",
+      "check": "Report mentions missing indexes and at least 3 of the specific fields"
+    },
+    {
+      "id": "catches_dollar_where",
+      "description": "Flags $where operator in /search as causing a full collection scan",
+      "check": "Report flags $where as a full collection scan or performance anti-pattern"
+    },
+    {
+      "id": "catches_n_plus_1",
+      "description": "Identifies N+1 — loop fetching author per post with findById",
+      "check": "Report identifies N+1 or loop+query pattern in GET / posts route"
+    },
+    {
+      "id": "catches_no_lean",
+      "description": "Flags missing .lean() on read-only Mongoose queries",
+      "check": "Report mentions lean() and flags its absence on read-only queries"
+    },
+    {
+      "id": "catches_app_side_aggregation",
+      "description": "Flags /stats pulling entire collection into memory instead of using MongoDB aggregation pipeline or countDocuments",
+      "check": "Report flags app-side aggregation in /stats — pulling all documents for counting"
+    },
+    {
+      "id": "catches_array_field_index",
+      "description": "Flags tags array field needs a dedicated index for the by-tag query",
+      "check": "Report mentions index on tags array field for the by-tag lookup"
+    },
+    {
+      "id": "uses_severity_categories",
+      "description": "Report is structured with severity tiers",
+      "check": "Report contains at least two distinct severity levels for findings"
+    },
+    {
+      "id": "no_file_modifications",
+      "description": "Report does not modify model or route files",
+      "check": "No changes were written to the input files"
+    }
+  ]
+}

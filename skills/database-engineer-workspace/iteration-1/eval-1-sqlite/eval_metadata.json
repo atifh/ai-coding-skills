@@ -1,0 +1,52 @@
+{
+  "eval_id": 1,
+  "eval_name": "sqlite-express-blog-audit",
+  "prompt": "I'm building a Node.js blog app with SQLite and better-sqlite3. Can you act as a database engineer and audit my DB layer? I think there might be some missing indexes and slow queries but I'm not sure where.",
+  "assertions": [
+    {
+      "id": "catches_n_plus_1",
+      "description": "Identifies the N+1 query pattern — loop in GET / fetching comments and author per post individually",
+      "check": "Report mentions N+1 or loop+query pattern in the GET / posts route"
+    },
+    {
+      "id": "catches_missing_pragmas",
+      "description": "Reports at least 3 of the 6 missing SQLite PRAGMAs (journal_mode, synchronous, foreign_keys, cache_size, temp_store, mmap_size)",
+      "check": "Report mentions PRAGMA and at least 3 specific PRAGMA names"
+    },
+    {
+      "id": "catches_missing_fk_indexes",
+      "description": "Flags unindexed foreign key columns: posts.user_id, comments.post_id, comments.user_id, likes.post_id",
+      "check": "Report mentions missing indexes on at least 2 FK columns"
+    },
+    {
+      "id": "catches_unbounded_select",
+      "description": "Flags the /search route has no LIMIT — could return thousands of rows",
+      "check": "Report flags missing LIMIT or unbounded result in search query"
+    },
+    {
+      "id": "catches_missing_transaction",
+      "description": "Flags DELETE route performs 3 writes (likes, comments, posts) without a transaction",
+      "check": "Report mentions missing transaction on the DELETE /:id route"
+    },
+    {
+      "id": "catches_app_side_aggregation",
+      "description": "Flags /stats pulls all posts into memory to count by status instead of using SQL COUNT",
+      "check": "Report flags the app-side aggregation pattern in /stats"
+    },
+    {
+      "id": "uses_severity_categories",
+      "description": "Report is structured with severity tiers (Critical / Important / Nice-to-have or equivalent)",
+      "check": "Report contains at least two distinct severity levels for findings"
+    },
+    {
+      "id": "no_file_modifications",
+      "description": "Report does not modify any source files — only produces an audit report",
+      "check": "No changes were written to db.js or routes/posts.js"
+    },
+    {
+      "id": "asks_for_approval",
+      "description": "Ends by asking the user to approve before applying fixes",
+      "check": "Report ends with a question or prompt asking user to confirm before changes are made"
+    }
+  ]
+}

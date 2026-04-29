@@ -1,0 +1,47 @@
+{
+  "eval_id": 2,
+  "eval_name": "postgres-prisma-ecommerce-audit",
+  "prompt": "My Prisma + PostgreSQL API is getting slow as data grows — some endpoints take 2-3 seconds. Can you do a full DB audit and tell me what's wrong?",
+  "assertions": [
+    {
+      "id": "catches_n_plus_1",
+      "description": "Identifies N+1 in getUserDashboard — loop fetching orderItems per order individually",
+      "check": "Report identifies N+1 or loop+query pattern in getUserDashboard"
+    },
+    {
+      "id": "catches_missing_indexes",
+      "description": "Flags missing @@index on FK fields: Order.userId, OrderItem.orderId, OrderItem.productId, Review.userId, Review.productId",
+      "check": "Report mentions missing indexes and at least 2 of the specific FK fields"
+    },
+    {
+      "id": "catches_missing_transaction",
+      "description": "Flags placeOrder — multiple writes (order + items + stock) not wrapped in prisma.$transaction",
+      "check": "Report flags missing transaction in placeOrder or createOrder function"
+    },
+    {
+      "id": "catches_redundant_fetch",
+      "description": "Flags getProductDetail fetches the same product twice with findUnique",
+      "check": "Report identifies redundant double-fetch of product in getProductDetail"
+    },
+    {
+      "id": "catches_unbounded_query",
+      "description": "Flags getAllProducts has no take/skip — unbounded result set",
+      "check": "Report flags missing pagination or LIMIT on getAllProducts"
+    },
+    {
+      "id": "catches_app_side_aggregate",
+      "description": "Flags manual average calculation in getProductDetail instead of SQL AVG()",
+      "check": "Report flags app-side average calculation that should be a SQL aggregate"
+    },
+    {
+      "id": "uses_severity_categories",
+      "description": "Report is structured with severity tiers",
+      "check": "Report contains at least two distinct severity levels for findings"
+    },
+    {
+      "id": "no_file_modifications",
+      "description": "Report does not modify schema.prisma or orderService.ts",
+      "check": "No changes were written to the input files"
+    }
+  ]
+}

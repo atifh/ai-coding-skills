@@ -1,0 +1,49 @@
+{
+  "eval_id": 3,
+  "eval_name": "mongodb-mongoose-blog-audit",
+  "configuration": "without_skill",
+  "expectations": [
+    {
+      "text": "catches_missing_indexes: Flags Post.status, authorId, tags, viewCount and User.email",
+      "passed": false,
+      "evidence": "Report lists status, authorId, tags and User.email indexes but misses viewCount index entirely"
+    },
+    {
+      "text": "catches_dollar_where: Flags $where as full collection scan",
+      "passed": true,
+      "evidence": "Report mentions '$where is slow and dangerous' and notes it can't use indexes and has injection risk"
+    },
+    {
+      "text": "catches_n_plus_1: Identifies N+1 author fetch loop",
+      "passed": true,
+      "evidence": "Report identifies N+1 and suggests populate fix"
+    },
+    {
+      "text": "catches_no_lean: Flags missing .lean() on read-only queries",
+      "passed": true,
+      "evidence": "Report has 'Missing .lean()' section with explanation"
+    },
+    {
+      "text": "catches_app_side_aggregation: Flags /stats loading entire collection",
+      "passed": true,
+      "evidence": "Report flags app-side counting and provides aggregate alternative"
+    },
+    {
+      "text": "catches_array_field_index: Flags tags array needs a multikey index",
+      "passed": true,
+      "evidence": "Report includes postSchema.index({ tags: 1 }) in the fix"
+    },
+    {
+      "text": "uses_severity_categories: Report has severity tiers",
+      "passed": false,
+      "evidence": "Report uses flat 'Main things to fix' list — no severity structure"
+    },
+    {
+      "text": "no_file_modifications: Did not modify model or route files",
+      "passed": true,
+      "evidence": "Only audit_report.md written"
+    }
+  ],
+  "pass_rate": 0.75,
+  "notes": "Missed viewCount index. No severity categorization. Core issues found but without structured prioritization or completeness."
+}

@@ -1,0 +1,33 @@
+{
+  "skill_name": "database-engineer",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I'm building a Node.js blog app with SQLite and better-sqlite3. Can you act as a database engineer and audit my DB layer? I think there might be some missing indexes and slow queries but I'm not sure where.",
+      "expected_output": "A structured audit report covering: missing PRAGMAs (journal_mode, synchronous, foreign_keys, cache_size, temp_store, mmap_size), missing indexes on all foreign key columns (user_id, post_id), N+1 query in GET /, unbounded SELECT in /search, app-side aggregation in /stats, missing transaction on DELETE, unindexed ORDER BY on created_at. Report should be categorized by severity (Critical/Important/Nice-to-have) with file:line references and exact fixes. Should NOT apply any changes without user approval.",
+      "files": [
+        "test-fixtures/sqlite-express/db.js",
+        "test-fixtures/sqlite-express/routes/posts.js"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "My Prisma + PostgreSQL API is getting slow as data grows — some endpoints take 2-3 seconds. Can you do a full DB audit and tell me what's wrong?",
+      "expected_output": "A structured audit report covering: missing @@index on all foreign key fields (userId in Order, orderId/productId in OrderItem, userId/productId in Review), N+1 in getUserDashboard, unbounded findMany in getAllProducts, redundant double-fetch in getProductDetail, app-side average instead of SQL aggregate, missing transaction in placeOrder, unindexed status+createdAt filter in getOrdersByStatus, no connection pool config. Categorized by severity with Prisma model and service file references and concrete fixes.",
+      "files": [
+        "test-fixtures/postgres-prisma/schema.prisma",
+        "test-fixtures/postgres-prisma/services/orderService.ts"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Act as a database engineer. My MongoDB + Mongoose app is getting slow as my user base grows. Here are my models and routes — what should I fix?",
+      "expected_output": "A structured audit report covering: missing index on Post.status, Post.authorId, Post.tags, Post.viewCount, User.email (should be unique), N+1 author fetch in GET /, $where full collection scan in /search, no lean() on read-only queries, app-side aggregation in /stats pulling entire collection into memory, unindexed array field query on tags, unindexed sort on viewCount, User.email lookup without index. Categorized by severity with model and route file references and exact Mongoose index definitions as fixes.",
+      "files": [
+        "test-fixtures/mongodb-mongoose/models/Post.js",
+        "test-fixtures/mongodb-mongoose/models/User.js",
+        "test-fixtures/mongodb-mongoose/routes/posts.js"
+      ]
+    }
+  ]
+}

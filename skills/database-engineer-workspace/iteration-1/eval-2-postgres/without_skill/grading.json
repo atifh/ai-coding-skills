@@ -1,0 +1,49 @@
+{
+  "eval_id": 2,
+  "eval_name": "postgres-prisma-ecommerce-audit",
+  "configuration": "without_skill",
+  "expectations": [
+    {
+      "text": "catches_n_plus_1: Identifies N+1 in getUserDashboard",
+      "passed": true,
+      "evidence": "Report identifies N+1 with loop+query in getUserDashboard and provides populate/include fix"
+    },
+    {
+      "text": "catches_missing_indexes: Flags missing @@index on FK fields",
+      "passed": true,
+      "evidence": "Report mentions missing @@index on Order.userId, OrderItem, Review fields with Prisma syntax"
+    },
+    {
+      "text": "catches_missing_transaction: Flags placeOrder with no prisma.$transaction",
+      "passed": true,
+      "evidence": "Report has 'No transaction in placeOrder' section mentioning prisma.$transaction()"
+    },
+    {
+      "text": "catches_redundant_fetch: Flags double findUnique in getProductDetail",
+      "passed": true,
+      "evidence": "Report mentions 'Redundant query in getProductDetail' with lines 29 and 37 reference"
+    },
+    {
+      "text": "catches_unbounded_query: Flags getAllProducts with no take/skip",
+      "passed": true,
+      "evidence": "Report flags 'Unbounded getAllProducts' with take suggestion"
+    },
+    {
+      "text": "catches_app_side_aggregate: Flags manual average instead of SQL AVG",
+      "passed": false,
+      "evidence": "Report does not mention the app-side average calculation in getProductDetail — misses this issue entirely"
+    },
+    {
+      "text": "uses_severity_categories: Report has severity tiers",
+      "passed": false,
+      "evidence": "Report uses flat sections (Schema Issues, Query Issues, Configuration, Summary) — no severity ranking"
+    },
+    {
+      "text": "no_file_modifications: Did not modify schema.prisma or orderService.ts",
+      "passed": true,
+      "evidence": "Only audit_report.md written"
+    }
+  ],
+  "pass_rate": 0.75,
+  "notes": "Missed app-side aggregation issue. No severity structure. Core issues (N+1, missing indexes, transaction) identified but with less depth and no structured prioritization."
+}

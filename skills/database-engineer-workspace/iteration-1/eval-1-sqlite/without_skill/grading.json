@@ -1,0 +1,54 @@
+{
+  "eval_id": 1,
+  "eval_name": "sqlite-express-blog-audit",
+  "configuration": "without_skill",
+  "expectations": [
+    {
+      "text": "catches_n_plus_1: Identifies N+1 query pattern in GET /",
+      "passed": true,
+      "evidence": "Report identifies the loop+query pattern and mentions it correctly"
+    },
+    {
+      "text": "catches_missing_pragmas: Reports at least 3 of 6 missing SQLite PRAGMAs",
+      "passed": false,
+      "evidence": "Only mentions journal_mode and foreign_keys (2 of 6). Missing: synchronous, cache_size, temp_store, mmap_size"
+    },
+    {
+      "text": "catches_missing_fk_indexes: Flags unindexed FK columns",
+      "passed": true,
+      "evidence": "Mentions posts.user_id, comments.post_id, likes.post_id with CREATE INDEX examples"
+    },
+    {
+      "text": "catches_unbounded_select: Flags /search has no LIMIT",
+      "passed": true,
+      "evidence": "Report mentions 'No LIMIT on search' section"
+    },
+    {
+      "text": "catches_missing_transaction: Flags DELETE route with no transaction",
+      "passed": true,
+      "evidence": "Report has 'Missing Transactions' section covering the DELETE route"
+    },
+    {
+      "text": "catches_app_side_aggregation: Flags /stats pulling all rows into memory",
+      "passed": true,
+      "evidence": "Report flags the SELECT * FROM posts for counting"
+    },
+    {
+      "text": "uses_severity_categories: Report has Critical/Important/Nice-to-have structure",
+      "passed": false,
+      "evidence": "Report uses flat headers (Performance Issues, Missing Transactions, SQLite Configuration, Summary) — no severity tiers"
+    },
+    {
+      "text": "no_file_modifications: Did not modify source files",
+      "passed": true,
+      "evidence": "Only audit_report.md was written"
+    },
+    {
+      "text": "asks_for_approval: Ends with approval prompt before applying fixes",
+      "passed": false,
+      "evidence": "Report ends with a summary of priority fixes, not a question asking for approval before making changes"
+    }
+  ],
+  "pass_rate": 0.67,
+  "notes": "Missed PRAGMA completeness, no severity structure, no approval gate. Core issues identified but report lacks structured format and SQLite-specific depth."
+}
