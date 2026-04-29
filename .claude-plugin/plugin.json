@@ -1,0 +1,8 @@
+{
+  "name": "ai-coding-skills",
+  "description": "A collection of Claude Code skills for software engineering workflows — database engineering, query optimization, schema auditing, and more.",
+  "author": {
+    "name": "Atif Haider",
+    "email": "atif.haider@nagarro.com"
+  }
+}
