@@ -1,20 +1,21 @@
 {
   "name": "ai-coding-skills",
-  "version": "1.0.0",
-  "description": "A collection of Claude Code skills for software engineering workflows — database engineering, query optimization, schema auditing, and more.",
-  "author": {
+  "owner": {
     "name": "Atif Haider"
   },
-  "repository": "https://github.com/atifh/ai-coding-skills",
-  "homepage": "https://github.com/atifh/ai-coding-skills",
-  "license": "MIT",
-  "tags": ["database", "performance", "sql", "mongodb", "postgresql", "sqlite", "mysql", "optimization", "indexing"],
-  "skills": [
+  "metadata": {
+    "description": "A collection of Claude Code skills for software engineering workflows — database engineering, query optimization, schema auditing, and more.",
+    "version": "1.0.0"
+  },
+  "plugins": [
     {
-      "name": "db-engineer",
-      "path": "skills/db-engineer/SKILL.md",
-      "description": "Acts as a senior database engineer to audit and optimize the DB layer of any codebase. Covers schema indexing, N+1 detection, query anti-patterns, transactions, and config for SQLite, PostgreSQL, MySQL, and MongoDB. Reports findings by severity and waits for approval before applying any fixes.",
-      "tags": ["database", "performance", "sql", "mongodb", "postgresql", "sqlite", "mysql", "indexing", "optimization"]
+      "name": "ai-coding-skills",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/atifh/ai-coding-skills.git"
+      },
+      "description": "A collection of Claude Code skills for software engineering workflows — database engineering, query optimization, schema auditing, and more.",
+      "version": "1.0.0"
     }
   ]
 }
